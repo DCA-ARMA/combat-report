@@ -2,8 +2,8 @@
 
 def collect_grades():
     """
-    Collects grades for each item from the user.
-    Returns a dictionary with the grades and calculated averages.
+    Collects grades and comments for each item from the user.
+    Returns a dictionary with the grades, comments, and calculated averages.
     """
     grades_data = {}
 
@@ -50,11 +50,14 @@ def collect_grades():
                     print("Invalid input. Please enter a number between 1 and 10.")
             items[item_name] = grade
             part_total += grade
+        # Collect comment for the part
+        comment = input(f"Enter comment for {part_name} (in Hebrew): ")
         # Calculate average for the part
         part_average = round(part_total / num_items, 2)
         grades_data[part_name] = {
             "items": items,
-            "average": part_average
+            "average": part_average,
+            "comment": comment
         }
         total_parts_score += part_average
         total_parts += 1
