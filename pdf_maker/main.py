@@ -10,40 +10,23 @@ if __name__ == "__main__":
         with open("input.txt", "r", encoding="utf-8") as file:
             input_text = file.read()
 
-        # Extract the date from the input text
-        date = None
-        lines = input_text.splitlines()
-        if lines:
-            # Assume the date is in the first line
-            first_line = lines[0]
-            # Try to extract the date from the first line
-            # Assuming the date is before the first '|'
-            if '|' in first_line:
-                date_part = first_line.split('|')[0].strip()
-                try:
-                    # Parse the date string
-                    parsed_date = datetime.strptime(date_part, '%b %d, %Y')
-                    # Format the date as desired, e.g., "DD/MM/YYYY"
-                    date = parsed_date.strftime('%d/%m/%Y')
-                except ValueError:
-                    # If parsing fails, leave date as the original string
-                    date = date_part
-            else:
-                date = ""  # Or set to current date
+        # Extract the date from the input text or set current date
+        date = datetime.now().strftime('%d/%m/%Y')
 
-        # If date is not found, set it to an empty string
-        if not date:
-            date = ""
+        # Set manager name and other details
+        manager_name = "יואב סמיפור"  # Replace with actual manager name if needed
+        force_name = "כוח האימון"    # Replace with the actual force name
+        location = "מיקום האימון"    # Replace with the actual location
 
         # Save the improved text to 'middle.txt'
-        save_improved_text_to_file(input_text)
+        save_improved_text_to_file(input_text, date, manager_name, force_name, location)
 
     except FileNotFoundError:
         print("Error: 'input.txt' file not found.")
-        date = ""
+        date = datetime.now().strftime('%d/%m/%Y')
 
     # Step 2: Collect grades from the user
     grades_data = collect_grades()
 
     # Step 3: Generate combat report document with grades
-    create_combat_report_from_file(date=date, grades_data=grades_data)
+    create_combat_report_from_file(date=date, grades_data=grades_data, signature=manager_name)
